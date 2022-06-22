@@ -1,0 +1,3 @@
+export CLOUD_NAME=dylqfbsq2
+export CLOUD_API_KEY=788139839676776
+export  CLOUD_API_SECRET=O2zmvQ_J-KkpUsM0TXnuGA0W-lc 
