@@ -17,6 +17,20 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
+    tags = models.ManyToManyField('Tags', verbose_name=_("tags or sub categories"))
+
+    def __str__(self):
+        return self.name
+
+
+
+#tags or sub categories, multiple category can be under 1 tags and multiple tags can be under 1 category
+
+
+class Tags(models.Model):
+    name = models.CharField(max_length=50)
+    category = models.ManyToManyField(Category, verbose_name=_("Main topics/category"))
+    articles = models.ManyToManyField("Article", verbose_name=_("articles"))
 
     def __str__(self):
         return self.name
