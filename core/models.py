@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from django.template.defaultfilters import slugify
+
 # Create your models here.
 
 class Author(models.Model):
@@ -15,9 +16,13 @@ class Author(models.Model):
     def __str__(self):
         return self.name
 
+    # def perform_create(self, request):
+    #     self.account = request.auth.
+
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
-    tags = models.ManyToManyField('Tags', verbose_name=_("tags or sub categories"))
+    tags = models.ManyToManyField("Tags", related_name="categories")
 
     def __str__(self):
         return self.name
@@ -29,8 +34,6 @@ class Category(models.Model):
 
 class Tags(models.Model):
     name = models.CharField(max_length=50)
-    category = models.ManyToManyField(Category, verbose_name=_("Main topics/category"))
-    articles = models.ManyToManyField("Article", verbose_name=_("articles"))
 
     def __str__(self):
         return self.name
@@ -46,6 +49,7 @@ class Article(models.Model):
     content = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='articles')
     related_articles = models.ManyToManyField('self', blank=True)
+    tag = models.ForeignKey("Tags", on_delete=models.CASCADE, related_name="articles")
 
     
     def Meta(self):
