@@ -148,4 +148,11 @@ cloudinary.config(
   api_secret = "O2zmvQ_J-KkpUsM0TXnuGA0W-lc" 
 )
 
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 # print(os.environ.get('CLOUDINARY_CLOUD_NAME'))
