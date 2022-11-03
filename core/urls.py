@@ -1,6 +1,6 @@
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
-from .views import AuthorViewSet, ArticleViewSet, CategoryViewSet, TagViewSet, RegisterViewSet, ArticleList
+from .views import AuthorViewSet, ArticleViewSet, CategoryViewSet, TagViewSet, RegisterViewSet, ArticleList, ImageUrlview
 
 router =  DefaultRouter()
 router.register(r'authors', AuthorViewSet)
@@ -13,4 +13,5 @@ router.register(r'user', RegisterViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('list', ArticleList.as_view()),
+    path('image/', ImageUrlview.as_view(), {'filename': 'img.jpg'}),
 ]

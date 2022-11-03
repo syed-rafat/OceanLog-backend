@@ -10,18 +10,27 @@ from django.template.defaultfilters import slugify
 
 
 class Author(models.Model):
+    """
+    Linked to django auth class User with account field
+    """
+
     account = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     name = models.CharField(max_length=50)
     profession = models.CharField(max_length=100)
     email = models.EmailField(max_length=254)
     bio = models.TextField(blank=True)
-    picture = models.ImageField(upload_to='images/', blank=True)
+    picture = CloudinaryField('image', overwrite=True)
 
     def __str__(self):
         return self.name
 
-    def perform_create(self, request):
-        self.account = request.auth.user
+    # need to apply this perform_create method on serializer instead of model in drf
+    # def perform_create(self, request):
+    #     self.account = request.auth.user
+    #     self.save()
+    #     print(request)
+    #     print('auth object')
+    #     print(request.auth.user)
 
 
 class Category(models.Model):
@@ -41,14 +50,28 @@ class Tags(models.Model):
         return self.name
 
 
+class Images(models.Model):
+    """
+    Model which stores all the image, then linked to other model.
+    url for this specific account is
+     access url =   "https://res.cloudinary.com/dylqfbsq2/" + url from model
+
+    Currently, images are not tied to article model, so their url link is only stored in html of article content for now.
+
+    """
+
+    url = CloudinaryField("image", overwrite="true")
+    #No. of image
+
+
 class Article(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=300)
     coverImage = CloudinaryField('image', overwrite=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True, null=True)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='articles', blank=True, null=True)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='articles')
     date = models.DateField(auto_now_add=True)
-    content_text = models.TextField()     #stores only [] text content from rich text editor
+    content_text = models.TextField()     #stores only text content from rich text editor
     content = models.TextField()          #stores html content from rich text editor
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='articles')
     related_articles = models.ManyToManyField('self', blank=True)
@@ -67,18 +90,4 @@ class Article(models.Model):
         super(Article, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
-
-
-class Images(models.Model):
-    """
-    Model which stores all the image, then linked to other model.
-    url for this specific account is
-     access url =   "https://res.cloudinary.com/dylqfbsq2/" + url from model
-
-    Currently, images are not tied to article model, so their url link is only stored in html of article content for now.
-
-    """
-
-    url = CloudinaryField("image", overwrite="true")
-    #No. of image
+        return str(self.title)

@@ -1,6 +1,6 @@
 from cgitb import lookup
 from rest_framework import serializers
-from .models import Article, Author, Category, Tags
+from .models import Article, Author, Category, Tags, Images
 from django.contrib.auth.models import User
 
 
@@ -14,6 +14,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 
 class ArticleListSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Article
         fields = ('id', 'title', 'description', 'coverImage', 'slug', 'author',
@@ -22,17 +23,20 @@ class ArticleListSerializer(serializers.ModelSerializer):
 
 class AuthorSerializer(serializers.ModelSerializer):
     articles = serializers.StringRelatedField(many=True)
-    account = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Author
-        fields = '__all__'
+        fields = ('id', 'name', 'profession', 'email', 'bio', 'picture', 'articles', 'account')
+        extra_kwargs = {
+            'account': {'read_only': True}
+        }
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+
 
 class TagSerializer(serializers.ModelSerializer):
     articles = ArticleSerializer(many=True)
@@ -44,11 +48,15 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    profile = serializers.PrimaryKeyRelatedField(queryset=Author.objects.all())
+    profile = serializers.PrimaryKeyRelatedField(read_only=True)  #queryset=Author.objects.all()
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'profile', 'name')
+        fields = ('id', 'username', 'password', 'profile')
+        #read_only_fields = ('is_active', 'is_staff')
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
     def create(self, validated_data):
         user = User.objects.create(username=validated_data['username'],
@@ -56,3 +64,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+
+class ImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Images
+        fields = '__all__'
