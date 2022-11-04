@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import FileUploadParser
+from rest_framework.permissions import AllowAny
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
@@ -56,6 +57,8 @@ class RegisterViewSet(viewsets.ModelViewSet):
     pagination_class = None
 
 
+# This Apiview for image upload is not working so i impplemented a a generic view down below  which is now working 
+
 # class ImageUrlview(APIView):
 #     # renderer_classes = [JSONRenderer]
 #     parser_classes = (FileUploadParser,)
@@ -82,15 +85,22 @@ class RegisterViewSet(viewsets.ModelViewSet):
 #         link = {'url': str(img_obj.url)}
 #         return Response(link)
 
+
 class ImageUrlview(generics.CreateAPIView):
     queryset = Images.objects.all()
     serializer_class = ImageSerializer
+    # permission_classes = [AllowAny]
+    pagination_class = None
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
+        print(dir(request))
+        print('             Rquest    Dictionary')
+        print(request.__dict__)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         link = {"url": "https://res.cloudinary.com/dylqfbsq2/" + serializer.data['url']}
         print(serializer.data)
-        return Response(link)
+        print(link)
+        return Response(link, status=200)
