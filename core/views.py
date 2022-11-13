@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import FileUploadParser
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
@@ -29,7 +29,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     pagination_class = None
-    permission_classes = [IsAuthenticatedOrReadOnly,]
+    permission_classes = [IsAuthenticated,]
 
     def perform_create(self, serializer):
         print(self.request.user)
@@ -57,9 +57,10 @@ class RegisterViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
     pagination_class = None
+    permission_classes = [IsAuthenticated]
 
 
-# This Apiview for image upload is not working so i impplemented a a generic view down below  which is now working 
+# This Apiview for image upload is not working so i implemented a a generic view down below  which is now working 
 
 # class ImageUrlview(APIView):
 #     # renderer_classes = [JSONRenderer]
