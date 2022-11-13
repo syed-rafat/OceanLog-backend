@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import FileUploadParser
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
@@ -29,6 +29,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     pagination_class = None
+    permission_classes = [IsAuthenticatedOrReadOnly,]
 
     def perform_create(self, serializer):
         print(self.request.user)
@@ -44,6 +45,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    pagination_class = None
 
 
 class TagViewSet(viewsets.ModelViewSet):
@@ -104,3 +106,15 @@ class ImageUrlview(generics.CreateAPIView):
         print(serializer.data)
         print(link)
         return Response(link, status=200)
+
+
+# Use this view to get username from accesstoken authorization
+class UserInfoView(APIView):
+
+    def get(self, request):
+        user = request.user
+        user_obj = User.objects.get(username=user)
+        profile = {"id": user_obj.id,
+        "username": user_obj.username}
+
+        return Response(profile, status=200)

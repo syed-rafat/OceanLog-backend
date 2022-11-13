@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# for printing in backend console. restpassword reset
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Application definition
 
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     "corsheaders",
     'cloudinary',
+    'django_rest_passwordreset',
 
     # local
     'core',
@@ -51,10 +54,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -138,9 +140,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    "http://127.0.0.1:9000",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+from corsheaders.defaults import default_headers
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "my-custom-header",
+]
+
 
 cloudinary.config( 
   cloud_name = "dylqfbsq2", 
@@ -151,7 +161,7 @@ cloudinary.config(
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'core.authenticate.CustomAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
@@ -159,3 +169,51 @@ REST_FRAMEWORK = {
 }
 
 # print(os.environ.get('CLOUDINARY_CLOUD_NAME'))
+
+DJOSER = {
+    "PASSWORD_RESET_CONFIRM_URL": "reset_password/{uid}/{token}",
+    'USERNAME_RESET_CONFIRM_URL': '/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {},
+}
+
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+  'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+  'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+  'ROTATE_REFRESH_TOKENS': False,
+  'BLACKLIST_AFTER_ROTATION': True,
+  'UPDATE_LAST_LOGIN': False,
+
+  'ALGORITHM': 'HS256',
+  'SIGNING_KEY': SECRET_KEY,
+  'VERIFYING_KEY': None,
+  'AUDIENCE': None,
+  'ISSUER': None,
+
+  'AUTH_HEADER_TYPES': ('Bearer',),
+  'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+  'USER_ID_FIELD': 'id',
+  'USER_ID_CLAIM': 'user_id',
+  'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+
+  'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+  'TOKEN_TYPE_CLAIM': 'token_type',
+
+  'JTI_CLAIM': 'jti',
+
+  'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+  'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+  'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+
+  # custom
+  'AUTH_COOKIE': 'access_token',  # Cookie name. Enables cookies if value is set.
+  'AUTH_COOKIE_DOMAIN': None,     # A string like "example.com", or None for standard domain cookie.
+  'AUTH_COOKIE_SECURE': False,    # Whether the auth cookies should be secure (https:// only).
+  'AUTH_COOKIE_HTTP_ONLY' : True, # Http only cookie flag.It's not fetch by javascript.
+  'AUTH_COOKIE_PATH': '/',        # The path of the auth cookie.
+  'AUTH_COOKIE_SAMESITE': 'None',  # Whether to set the flag restricting cookie leaks on cross-site requests. This can be 'Lax', 'Strict', or None to disable the flag.
+}

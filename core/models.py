@@ -71,11 +71,11 @@ class Article(models.Model):
     slug = models.SlugField(max_length=100, unique=True, blank=True, null=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='articles')
     date = models.DateField(auto_now_add=True)
-    content_text = models.TextField()     #stores only text content from rich text editor
-    content = models.TextField()          #stores html content from rich text editor
+    content_text = models.TextField(blank=True, null=True)     #stores only text content from rich text editor
+    content = models.TextField(blank=True, null=True)          #stores html content from rich text editor
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='articles')
     related_articles = models.ManyToManyField('self', blank=True)
-    tag = models.ForeignKey("Tags", on_delete=models.CASCADE, related_name="articles")
+    tag = models.ForeignKey("Tags", on_delete=models.DO_NOTHING, related_name="articles")
 
     def Meta(self):
         ordering = ['-date']

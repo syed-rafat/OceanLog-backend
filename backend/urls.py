@@ -14,16 +14,47 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
+from .views import LoginView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('content/', include('core.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+     path('login/', LoginView.as_view(), name="login"),
+    # path('reset-password/', PasswordResetView.as_view(), name='reset_password'),
+    # path('reset-password/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
+    # path('reset-password/confirm/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 ]
+
+
+
+from django.dispatch import receiver
+from django.urls import reverse
+from django_rest_passwordreset.signals import reset_password_token_created
+from django.core.mail import send_mail  
+
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+
+    email_plaintext_message = "{}?token={}".format(reverse('password_reset:reset-password-request'), reset_password_token.key)
+
+    send_mail(
+        # title:
+        "Password Reset for {title}".format(title="Some website title"),
+        # message:
+        email_plaintext_message,
+        # from:
+        "noreply@somehost.local",
+        # to:
+        [reset_password_token.user.email]
+    )
