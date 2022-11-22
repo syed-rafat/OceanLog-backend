@@ -2,15 +2,22 @@ from cgitb import lookup
 from rest_framework import serializers
 from .models import Article, Author, Category, Tags, Images
 from django.contrib.auth.models import User
+from rest_framework.response import Response
+from rest_framework import status
+
 
 
 class ArticleSerializer(serializers.ModelSerializer):
-    related_articles = serializers.StringRelatedField(many=True)
+    author = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = ('id', 'title', 'description', 'coverImage', 'slug', 'author', 'date', 'category', 'tag', 'content')
         lookup_field = 'slug'
+        extra_kwargs = {
+            'author': {'read_only': True}
+        }
+
 
 
 class ArticleListSerializer(serializers.ModelSerializer):
@@ -20,16 +27,21 @@ class ArticleListSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'description', 'coverImage', 'slug', 'author',
                   'date', 'category', 'tag')
 
+        extra_kwargs = {
+            'author': {'allow_null': True}
+        }
+
 
 class AuthorSerializer(serializers.ModelSerializer):
-    articles = serializers.StringRelatedField(many=True)
+    # articles = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Author
-        fields = ('id', 'name', 'profession', 'email', 'bio', 'picture', 'articles', 'account')
+        fields = ('name', 'profession', 'email', 'bio', 'picture', 'account')
         extra_kwargs = {
             'account': {'read_only': True}
         }
+
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -71,3 +83,11 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Images
         fields = '__all__'
+
+class UserArticleSerializer(serializers.ModelSerializer):
+
+    articles = ArticleSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'articles')

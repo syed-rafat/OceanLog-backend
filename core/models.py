@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from django.template.defaultfilters import slugify
+from django.conf import settings
 
 
 # TODO: add description field to article model
@@ -14,7 +15,7 @@ class Author(models.Model):
     Linked to django auth class User with account field
     """
 
-    account = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    account = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name='profile')
     name = models.CharField(max_length=50)
     profession = models.CharField(max_length=100)
     email = models.EmailField(max_length=254)
@@ -69,11 +70,11 @@ class Article(models.Model):
     description = models.CharField(max_length=300)
     coverImage = CloudinaryField('image', overwrite=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True, null=True)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='articles')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
     date = models.DateField(auto_now_add=True)
     content_text = models.TextField(blank=True, null=True)     #stores only text content from rich text editor
     content = models.TextField(blank=True, null=True)          #stores html content from rich text editor
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='articles')
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, related_name='articles')
     related_articles = models.ManyToManyField('self', blank=True)
     tag = models.ForeignKey("Tags", on_delete=models.DO_NOTHING, related_name="articles")
 

@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets, generics
 from .models import Author, Article, Category, Tags, Images
-from .serializers import ArticleListSerializer, ArticleSerializer, AuthorSerializer, CategorySerializer, TagSerializer, RegisterSerializer, ImageSerializer
+from .serializers import ArticleListSerializer, ArticleSerializer, AuthorSerializer, CategorySerializer, TagSerializer, RegisterSerializer, ImageSerializer, UserArticleSerializer
 from django.contrib.auth.models import User
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .pagination import HomePagination
 from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer
@@ -16,6 +16,10 @@ class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     lookup_field = 'slug'
     pagination_class = None
+    permission_classes=[IsAuthenticatedOrReadOnly,]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
 
 class ArticleList(ListAPIView):
@@ -29,7 +33,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     pagination_class = None
-    permission_classes = [IsAuthenticated,]
+    # permission_classes = [IsAuthenticated,]
 
     def perform_create(self, serializer):
         print(self.request.user)
@@ -51,6 +55,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tags.objects.all()
     serializer_class = TagSerializer
+    pagination_class = None
 
 
 class RegisterViewSet(viewsets.ModelViewSet):
@@ -95,6 +100,7 @@ class ImageUrlview(generics.CreateAPIView):
     # permission_classes = [AllowAny]
     pagination_class = None
 
+    
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         print(dir(request))
@@ -119,3 +125,22 @@ class UserInfoView(APIView):
         "username": user_obj.username}
 
         return Response(profile, status=200)
+
+
+# To get all articles related to author, Use the UserArticleView by sending access token to get list 
+
+class UserArticles(APIView):
+
+    def get_object(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        user = self.get_object(pk)
+
+        serializer = UserArticleSerializer(user)
+
+        return Response(serializer.data, status=200)
+

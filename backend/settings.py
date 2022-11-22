@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import cloudinary
 import os
@@ -144,7 +145,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 
-#needed for cookie
+# needed for cookie
 # CORS_ALLOW_CREDENTIALS = True
 
 # from corsheaders.defaults import default_headers
@@ -154,10 +155,10 @@ CORS_ALLOWED_ORIGINS = [
 # ]
 
 
-cloudinary.config( 
-  cloud_name = "dylqfbsq2", 
-  api_key = "788139839676776", 
-  api_secret = "O2zmvQ_J-KkpUsM0TXnuGA0W-lc" 
+cloudinary.config(
+    cloud_name="dylqfbsq2",
+    api_key="788139839676776",
+    api_secret="O2zmvQ_J-KkpUsM0TXnuGA0W-lc"
 )
 
 REST_FRAMEWORK = {
@@ -182,10 +183,8 @@ REST_FRAMEWORK = {
 # }
 
 
-from datetime import timedelta
-
 # SIMPLE_JWT = {
-#   'ACCESS_TOKEN_LIFETIME': timedelta(seconds=30),
+#   'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
 #   'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 #   'ROTATE_REFRESH_TOKENS': False,
 #   'BLACKLIST_AFTER_ROTATION': True,
