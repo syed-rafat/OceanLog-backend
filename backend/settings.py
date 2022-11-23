@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+d!k-*79!f_(a#w(7!u(z-%8d48p&#b48f5r+rv^d6c1p^o_#8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['oceanlogenv.eba-pe3q2zwp.us-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost']
 
 # for printing in backend console. restpassword reset
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 
     # 3rd_party
     'rest_framework',
-    "corsheaders",
+    # "corsheaders",
     'cloudinary',
     # 'django_rest_passwordreset',
 
@@ -54,7 +54,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     "django.middleware.common.CommonMiddleware",
@@ -140,10 +139,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ALLOWED_HOSTS = ['*']
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+
 
 # needed for cookie
 # CORS_ALLOW_CREDENTIALS = True
