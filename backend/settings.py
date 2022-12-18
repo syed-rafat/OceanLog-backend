@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-+d!k-*79!f_(a#w(7!u(z-%8d48p&#b48f5r+rv^d6c1p^o_#8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['oceanlogenv.eba-pe3q2zwp.us-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['https://oclogbackend.azurewebsites.net', '127.0.0.1', 'localhost', '127.0.0.1:8000']
 
 # for printing in backend console. restpassword reset
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
