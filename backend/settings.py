@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+d!k-*79!f_(a#w(7!u(z-%8d48p&#b48f5r+rv^d6c1p^o_#8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['oceanlogenv.eba-pe3q2zwp.us-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['oceanlogenv.eba-pe3q2zwp.us-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost', '127.0.0.1:8000']
 
 # for printing in backend console. restpassword reset
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 
     # 3rd_party
     'rest_framework',
-    # "corsheaders",
+    "corsheaders",
     'cloudinary',
     # 'django_rest_passwordreset',
 
@@ -54,9 +54,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "django.middleware.common.CommonMiddleware",
+    # "django.middleware.common.CommonMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -137,8 +139,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# ALLOWED_HOSTS = ['*']
-
 
 
 # needed for cookie
@@ -167,6 +167,16 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'DEFAULT_METADATA_CLASS': 'rest_framework.metadata.SimpleMetadata',
 }
+
+# email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your_email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your_password'
+
+
 
 # print(os.environ.get('CLOUDINARY_CLOUD_NAME'))
 
