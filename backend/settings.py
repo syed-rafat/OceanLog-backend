@@ -30,6 +30,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['oclogbackend.azurewebsites.net', '127.0.0.1', 'localhost', '127.0.0.1:8000']
 
+if 'CODESPACE_NAME' in os.environ:
+    CSRF_TRUSTED_ORIGINS = [f'https://{os.getenv("CODESPACE_NAME")}-8000.{os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")}']
+
 # for printing in backend console. restpassword reset
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -57,6 +60,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     # "django.middleware.common.CommonMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -90,28 +94,15 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
-if 'RDS_HOSTNAME' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['DBNAME'],
+        'HOST': os.environ['DBHOST'],
+        'USER': os.environ['DBUSER'],
+        'PASSWORD': os.environ['DBPASS'] 
     }
-else:
-    DATABASES = {
-    "default": {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'oc',
-    'USER': 'rafat',
-    'PASSWORD': '7898788',
-    'HOST': '127.0.0.1',
-    'PORT': '5432',
 }
-} 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -149,6 +140,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
