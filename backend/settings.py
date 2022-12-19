@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-+d!k-*79!f_(a#w(7!u(z-%8d48p&#b48f5r+rv^d6c1p^o_#8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://oclogbackend.azurewebsites.net', '127.0.0.1', 'localhost', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['oclogbackend.azurewebsites.net', '127.0.0.1', 'localhost', '127.0.0.1:8000']
 
 # for printing in backend console. restpassword reset
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -89,13 +89,29 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
+if 'RDS_HOSTNAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+    }
+else:
+    DATABASES = {
+    "default": {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'oc',
+    'USER': 'rafat',
+    'PASSWORD': '7898788',
+    'HOST': '127.0.0.1',
+    'PORT': '5432',
+}
+} 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -131,7 +147,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

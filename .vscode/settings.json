@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/437b09d5-1c19-4417-9905-f7033a3a5409/AppServices/subscriptions/437b09d5-1c19-4417-9905-f7033a3a5409/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/oclogbackend",
+    "appService.deploySubpath": "."
+}
