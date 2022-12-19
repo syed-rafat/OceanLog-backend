@@ -30,11 +30,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['oclogbackend.azurewebsites.net', '127.0.0.1', 'localhost', '127.0.0.1:8000']
 
-if 'CODESPACE_NAME' in os.environ:
-    CSRF_TRUSTED_ORIGINS = [f'https://{os.getenv("CODESPACE_NAME")}-8000.{os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")}']
+# if 'CODESPACE_NAME' in os.environ:
+#     CSRF_TRUSTED_ORIGINS = [f'https://{os.getenv("CODESPACE_NAME")}-8000.{os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")}']
+
+CSRF_TRUSTED_ORIGINS=['https://oclogbackend.azurewebsites.net']
 
 # for printing in backend console. restpassword reset
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Application definition
 
@@ -93,12 +95,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+hostname = os.environ['DBHOST']
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ['DBNAME'],
-        'HOST': os.environ['DBHOST'],
+        'HOST': hostname + ".postgres.database.azure.com",
         'USER': os.environ['DBUSER'],
         'PASSWORD': os.environ['DBPASS'] 
     }
