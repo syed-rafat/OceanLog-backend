@@ -31,5 +31,6 @@
         "env.bak{,/**}",
         "venv.bak{,/**}",
         ".vscode{,/**}"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "off"
 }
