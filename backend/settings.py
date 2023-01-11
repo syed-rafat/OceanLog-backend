@@ -15,6 +15,7 @@ from pathlib import Path
 import cloudinary
 import os
 
+local = True
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -94,7 +95,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-hostname = os.environ['DBHOST']
+# hostname = os.environ['DBHOST']
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -105,17 +106,27 @@ hostname = os.environ['DBHOST']
 #     }
 # }
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': postgres,
-        'HOST': hostname + ".postgres.database.azure.com",
-        'USER': os.environ['DBUSER'],
-        'PASSWORD': os.environ['DBPASS'] 
+if local==False:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': postgres,
+            'HOST': hostname + ".postgres.database.azure.com",
+            'USER': os.environ['DBUSER'],
+            'PASSWORD': os.environ['DBPASS'] 
+        }
     }
+else:
+    DATABASES = {
+    "default": {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'oc',
+    'USER': 'rafat',
+    'PASSWORD': '7898788',
+    'HOST': '127.0.0.1',
+    'PORT': '5432',
 }
-
+} 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
