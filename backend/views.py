@@ -5,8 +5,10 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from django.conf import settings
 from rest_framework import status
+from django.http import HttpResponse
 
-#This view file is needed for Http only cookie
+# This view file is needed for Http only cookie
+
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -14,6 +16,11 @@ def get_tokens_for_user(user):
         'refresh': str(refresh),
         'access': str(refresh.access_token),
     }
+
+
+def default_view(request):
+    return HttpResponse('<div><h2>Content section: </h2><a href="http://localhost:8000/content/">Link</a> <p>api/token/ -> For obtaining token pair</p><p>api/token/refresh/ -> For token refresh </p></div>')
+
 
 class LoginView(APIView):
     def post(self, request, format=None):
@@ -26,17 +33,17 @@ class LoginView(APIView):
             if user.is_active:
                 data = get_tokens_for_user(user)
                 response.set_cookie(
-                    key = settings.SIMPLE_JWT['AUTH_COOKIE'], 
-                    value = data["access"],
-                    expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-                    secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                    httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                    samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+                    key=settings.SIMPLE_JWT['AUTH_COOKIE'],
+                    value=data["access"],
+                    expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+                    secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                    httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                    samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
                 )
                 csrf.get_token(request)
-                response.data = {"Success" : "Login successfully","data":data}
+                response.data = {"Success": "Login successfully", "data": data}
                 return response
             else:
-                return Response({"No active" : "This account is not active!!"}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"No active": "This account is not active!!"}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response({"Invalid" : "Invalid username or password!!"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"Invalid": "Invalid username or password!!"}, status=status.HTTP_404_NOT_FOUND)

@@ -20,7 +20,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
-from .views import LoginView
+from .views import LoginView, default_view
 
 
 urlpatterns = [
@@ -29,6 +29,7 @@ urlpatterns = [
     # path('login/', LoginView.as_view(), name="login"),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('', default_view),
     # path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     # path('reset-password/', PasswordResetView.as_view(), name='reset_password'),
     # path('reset-password/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
