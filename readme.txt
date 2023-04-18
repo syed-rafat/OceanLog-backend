@@ -11,5 +11,5 @@ $ python3 /var/app/current/manage.py <command name>
 
 (for admin site)
 uername: rafat
-password: 7898788
+password: ******
 
