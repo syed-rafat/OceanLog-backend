@@ -6,18 +6,24 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-
-class ArticleSerializer(serializers.ModelSerializer):
-    author = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
+class AuthorSerializer(serializers.ModelSerializer):
+    # articles = serializers.StringRelatedField(many=True)
 
     class Meta:
-        model = Article
-        fields = ('id', 'title', 'description', 'coverImage', 'slug', 'author', 'date', 'category', 'tag', 'content')
-        lookup_field = 'slug'
-        extra_kwargs = {
-            'author': {'read_only': True}
-        }
+        model = Author
+        fields = '__all__'
+        # extra_kwargs = {
+        #     'account': {'read_only': True}
+        # }
 
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    profile = AuthorSerializer()
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'profile')
 
 
 class ArticleListSerializer(serializers.ModelSerializer):
@@ -32,14 +38,18 @@ class ArticleListSerializer(serializers.ModelSerializer):
         }
 
 
-class AuthorSerializer(serializers.ModelSerializer):
-    # articles = serializers.StringRelatedField(many=True)
+
+class ArticleSerializer(serializers.ModelSerializer):
+    # author = serializers.StringRelatedField(read_only=True)
+    author = UserSerializer()
+
 
     class Meta:
-        model = Author
-        fields = ('name', 'profession', 'email', 'bio', 'picture', 'account')
+        model = Article
+        fields = ('id', 'title', 'description', 'coverImage', 'slug', 'author', 'date', 'category', 'tag', 'content')
+        lookup_field = 'slug'
         extra_kwargs = {
-            'account': {'read_only': True}
+            'author': {'read_only': True}
         }
 
 

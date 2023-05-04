@@ -9,6 +9,8 @@ from django.conf import settings
 # TODO: fix the image related problems in article model
 # TODO: need to redo models according to ckeditor5
 
+# NOTE: We are still using User as foreignkey for author in Article Model. Need to change it to Author model 
+
 
 class Author(models.Model):
     """

@@ -33,6 +33,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     pagination_class = None
+    lookup_field = 'slug'
     # permission_classes = [IsAuthenticated,]
 
     def perform_create(self, serializer):

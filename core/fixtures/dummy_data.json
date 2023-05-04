@@ -41,7 +41,7 @@
         "profession": "Author",
         "email": "johndoe@example.com",
         "bio": "I'm a writer and author of several books.",
-        "picture": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+        "picture": "image/upload/v1673547203/zhkpkqbaiupqeraebyqs.png"
       }
     },
     {
@@ -53,7 +53,7 @@
         "profession": "Writer",
         "email": "janesmith@example.com",
         "bio": "",
-        "picture": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+        "picture": "image/upload/v1671118062/uedxww8hxj4pl2atghwz.jpg"
       }
     },
     {
@@ -121,7 +121,7 @@
       "model": "core.images",
       "pk": 1,
       "fields": {
-        "url": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+        "url": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1668704620/fs7vbs3ujpkc1kxqdgil.jpg"
       }
     },
     {
@@ -182,35 +182,35 @@
     },
     {
         "model": "core.article",
-        "pk": 21,
+        "pk": 1,
         "fields": {
             "title": "The Benefits of Meditation",
             "description": "Learn about the benefits of meditation and how it can help you in your daily life.",
-            "coverImage": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1620142376/meditation_k9yvo5.jpg",
+            "coverImage": "image/upload/v1667509530/sgcpisbll3zfuqycydzl.jpg",
             "slug": "the-benefits-of-meditation",
             "author": 1,
             "date": "2022-02-28",
             "content_text": "",
             "content": "<p>Meditation has been practiced for thousands of years and is known to have numerous benefits. Here are just a few:</p><ul><li>Reduces stress and anxiety</li><li>Improves focus and concentration</li><li>Promotes emotional well-being</li><li>Boosts immune system</li><li>Improves sleep quality</li></ul>",
             "category": 3,
-            "related_articles": [22],
+            "related_articles": [2],
             "tag": 4
         }
     },
     {
         "model": "core.article",
-        "pk": 22,
+        "pk": 2,
         "fields": {
             "title": "The Importance of a Healthy Diet",
             "description": "Learn why having a healthy diet is important for your overall health and well-being.",
-            "coverImage": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1620142376/healthy-food_xwwf6p.jpg",
+            "coverImage": "image/upload/v1671532759/idehrjnybseuy3fq6jmu.jpg",
             "slug": "the-importance-of-a-healthy-diet",
             "author": 2,
             "date": "2022-03-01",
             "content_text": "",
             "content": "<p>A healthy diet is crucial for coretaining good health. It can help prevent chronic diseases such as obesity, diabetes, and heart disease. Here are some tips for maintaining a healthy </p><ul><li>Eat plenty of fruits and vegetables</li><li>Limit processed foods</li><li>Drink water instead of sugary drinks</li><li>Get enough sleep</li><li>Exercise regularly</li></ul>",
             "category": 1,
-            "related_articles": [21],
+            "related_articles": [1],
             "tag": 4
         }
     }
