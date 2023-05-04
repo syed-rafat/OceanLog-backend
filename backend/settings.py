@@ -121,9 +121,9 @@ else:
     "default": {
     'ENGINE': 'django.db.backends.postgresql',
     'NAME': 'oc',
-    'USER': 'rafat',
-    'PASSWORD': '7898788',
-    'HOST': '127.0.0.1',
+    'USER': 'ocmanager',
+    'PASSWORD': 'ocpostgres',
+    'HOST': 'localhost',
     'PORT': '5432',
 }
 } 
