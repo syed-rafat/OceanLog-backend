@@ -1,0 +1,217 @@
+[
+    {
+      "model": "auth.user",
+      "pk": 1,
+      "fields": {
+        "password": "pbkdf2_sha256$150000$Kjkd2PZ5n5u5$a5voR+5uY7Qw6MKPnGB7djU9p+uVn3q/Ud1gj7L98o8=",
+        "last_login": "2022-05-04T14:05:18.638Z",
+        "is_superuser": false,
+        "username": "testuser1",
+        "first_name": "",
+        "last_name": "",
+        "email": "testuser1@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-05-04T14:05:18.638Z"
+      }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+          "password": "pbkdf2_sha256$150000$Kjkd2PZ5n5u5$a5voR+5uY7Qw6MKPnGB7djU9p+uVn3q/Ud1gj7L98o8=",
+          "last_login": "2022-05-04T14:05:18.638Z",
+          "is_superuser": false,
+          "username": "testuser2",
+          "first_name": "",
+          "last_name": "",
+          "email": "testuser2@gmail.com",
+          "is_staff": false,
+          "is_active": true,
+        "date_joined": "2022-05-04T14:05:18.638Z"
+    }
+},
+
+    {
+      "model": "core.author",
+      "pk": 1,
+      "fields": {
+        "account": 1,
+        "name": "John Doe",
+        "profession": "Author",
+        "email": "johndoe@example.com",
+        "bio": "I'm a writer and author of several books.",
+        "picture": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+      }
+    },
+    {
+      "model": "core.author",
+      "pk": 2,
+      "fields": {
+        "account": 2,
+        "name": "Jane Smith",
+        "profession": "Writer",
+        "email": "janesmith@example.com",
+        "bio": "",
+        "picture": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+      }
+    },
+    {
+      "model": "core.category",
+      "pk": 1,
+      "fields": {
+        "name": "Physical oceanography",
+        "tags": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "model": "core.category",
+      "pk": 2,
+      "fields": {
+        "name": "Chemical oceanography",
+        "tags": [
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "model": "core.category",
+      "pk": 3,
+      "fields": {
+        "name": "Biological oceanography",
+        "tags": [
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "model": "core.tags",
+      "pk": 1,
+      "fields": {
+        "name": "Physical oceanography"
+      }
+    },
+    {
+      "model": "core.tags",
+      "pk": 2,
+      "fields": {
+        "name": "climate change"
+      }
+    },
+    {
+      "model": "core.tags",
+      "pk": 3,
+      "fields": {
+        "name": "ocean modelling"
+      }
+    },
+    {
+      "model": "core.tags",
+      "pk": 4,
+      "fields": {
+        "name":"sustainability"
+      }
+    },
+    {
+      "model": "core.images",
+      "pk": 1,
+      "fields": {
+        "url": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+      }
+    },
+    {
+      "model": "core.images",
+      "pk": 2,
+      "fields": {
+        "url": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+      }
+    },
+    {
+      "model": "core.images",
+      "pk": 3,
+      "fields": {
+        "url": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+      }
+    },
+    {
+      "model": "core.images",
+      "pk": 4,
+      "fields": {
+        "url": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+      }
+    },
+    {
+      "model": "core.images",
+      "pk": 5,
+      "fields": {
+        "url": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+      }
+    },
+    {
+      "model": "core.images",
+      "pk": 6,
+      "fields": {
+        "url": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+      }
+    },
+    {
+      "model": "core.images",
+      "pk": 7,
+      "fields": {
+        "url": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+      }
+    },
+    {
+      "model": "core.images",
+      "pk": 8,
+      "fields": {
+        "url": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+      }
+    },
+    {
+      "model": "core.images",
+      "pk": 9,
+      "fields": {
+        "url": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1651503185/sample.jpg"
+      }
+    },
+    {
+        "model": "core.article",
+        "pk": 21,
+        "fields": {
+            "title": "The Benefits of Meditation",
+            "description": "Learn about the benefits of meditation and how it can help you in your daily life.",
+            "coverImage": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1620142376/meditation_k9yvo5.jpg",
+            "slug": "the-benefits-of-meditation",
+            "author": 1,
+            "date": "2022-02-28",
+            "content_text": "",
+            "content": "<p>Meditation has been practiced for thousands of years and is known to have numerous benefits. Here are just a few:</p><ul><li>Reduces stress and anxiety</li><li>Improves focus and concentration</li><li>Promotes emotional well-being</li><li>Boosts immune system</li><li>Improves sleep quality</li></ul>",
+            "category": 3,
+            "related_articles": [22],
+            "tag": 4
+        }
+    },
+    {
+        "model": "core.article",
+        "pk": 22,
+        "fields": {
+            "title": "The Importance of a Healthy Diet",
+            "description": "Learn why having a healthy diet is important for your overall health and well-being.",
+            "coverImage": "https://res.cloudinary.com/dylqfbsq2/image/upload/v1620142376/healthy-food_xwwf6p.jpg",
+            "slug": "the-importance-of-a-healthy-diet",
+            "author": 2,
+            "date": "2022-03-01",
+            "content_text": "",
+            "content": "<p>A healthy diet is crucial for coretaining good health. It can help prevent chronic diseases such as obesity, diabetes, and heart disease. Here are some tips for maintaining a healthy </p><ul><li>Eat plenty of fruits and vegetables</li><li>Limit processed foods</li><li>Drink water instead of sugary drinks</li><li>Get enough sleep</li><li>Exercise regularly</li></ul>",
+            "category": 1,
+            "related_articles": [21],
+            "tag": 4
+        }
+    }
+    ]
