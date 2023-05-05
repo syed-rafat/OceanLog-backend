@@ -12,12 +12,23 @@ from django.conf import settings
 # NOTE: We are still using User as foreignkey for author in Article Model. Need to change it to Author model 
 
 
+# Custom user model
+# class AuthUser(User):
+#     class Meta:
+#         proxy = True
+
+#     def __str__(self):
+#         if hasattr(self, 'profile'):
+#             print('has profile', self.profile.name)
+#             return self.profile.name
+        
+
 class Author(models.Model):
     """
     Linked to django auth class User with account field
     """
 
-    account = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name='profile')
+    account = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='profile')
     name = models.CharField(max_length=50)
     profession = models.CharField(max_length=100)
     email = models.EmailField(max_length=254)

@@ -7,14 +7,14 @@ from rest_framework import status
 
 
 class AuthorSerializer(serializers.ModelSerializer):
-    # articles = serializers.StringRelatedField(many=True)
+    articles = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Author
         fields = '__all__'
-        # extra_kwargs = {
-        #     'account': {'read_only': True}
-        # }
+        extra_kwargs = {
+            'account': {'read_only': True}
+        }
 
 
 
@@ -27,6 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ArticleListSerializer(serializers.ModelSerializer):
+    # author_name = serializers.StringRelatedField()
     
     class Meta:
         model = Article
@@ -37,21 +38,10 @@ class ArticleListSerializer(serializers.ModelSerializer):
             'author': {'allow_null': True}
         }
 
-
-
-class ArticleSerializer(serializers.ModelSerializer):
-    # author = serializers.StringRelatedField(read_only=True)
-    author = UserSerializer()
-
-
-    class Meta:
-        model = Article
-        fields = ('id', 'title', 'description', 'coverImage', 'slug', 'author', 'date', 'category', 'tag', 'content')
-        lookup_field = 'slug'
-        extra_kwargs = {
-            'author': {'read_only': True}
-        }
-
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['author_name'] = instance.author.profile.name
+        return data
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -61,7 +51,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class TagSerializer(serializers.ModelSerializer):
-    articles = ArticleSerializer(many=True)
+    articles = serializers.StringRelatedField(many=True)
     categories = CategorySerializer(many=True)
 
     class Meta:
@@ -94,6 +84,22 @@ class ImageSerializer(serializers.ModelSerializer):
         model = Images
         fields = '__all__'
 
+
+class ArticleSerializer(serializers.ModelSerializer):
+    # author = serializers.StringRelatedField(read_only=True)
+    author = UserSerializer()
+    tag = TagSerializer()
+
+
+    class Meta:
+        model = Article
+        fields = ('id', 'title', 'description', 'coverImage', 'slug', 'author', 'date', 'category', 'tag', 'content')
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'author': {'read_only': True}
+        }
+
+
 class UserArticleSerializer(serializers.ModelSerializer):
 
     articles = ArticleSerializer(many=True, read_only=True)
@@ -101,3 +107,4 @@ class UserArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'articles')
+

@@ -24,4 +24,4 @@ class Command(BaseCommand):
         filename = options['filename']
         self.delete_data()
         call_command('loaddata', filename)
-        self.stdout.write(self.style.SUCCESS('Successfully deleted data'))
+        self.stdout.write(self.style.SUCCESS('Successfully deleted and reloaded data'))
