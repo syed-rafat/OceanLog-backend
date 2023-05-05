@@ -148,8 +148,8 @@ class UserArticles(APIView):
 
 class ArticleListByCategory(ListAPIView):
     serializer_class = ArticleListSerializer
-    # pagination_class = HomePagination
+    pagination_class = None
 
     def get_queryset(self):
         category = self.kwargs['category']
-        return Article.objects.filter(category__name=category)
+        return Article.objects.filter(category__id=category)

@@ -1,6 +1,6 @@
 from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
-from .views import AuthorViewSet, ArticleViewSet, CategoryViewSet, TagViewSet, RegisterViewSet, ArticleList, ImageUrlview, UserInfoView, UserArticles
+from .views import AuthorViewSet, ArticleViewSet, CategoryViewSet, TagViewSet, RegisterViewSet, ArticleList, ImageUrlview, UserInfoView, UserArticles, ArticleListByCategory
 
 router =  DefaultRouter()
 router.register(r'authors', AuthorViewSet)
@@ -13,6 +13,7 @@ router.register(r'user', RegisterViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('list', ArticleList.as_view()),
+    path('list/<int:category>/', ArticleListByCategory.as_view()),
     path('image/', ImageUrlview.as_view(), {'filename': 'img.jpg'}),
     path('user-info/', UserInfoView.as_view()),
     path('user-articles/<int:pk>/', UserArticles.as_view()),
