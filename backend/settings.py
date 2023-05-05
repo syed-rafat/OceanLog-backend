@@ -210,7 +210,12 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your_email@gmail.com'
 EMAIL_HOST_PASSWORD = 'your_password'
 
+CORS_ALLOWED_ORIGIN = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+]
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # print(os.environ.get('CLOUDINARY_CLOUD_NAME'))
 

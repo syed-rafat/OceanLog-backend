@@ -90,6 +90,17 @@
       }
     },
     {
+      "model": "core.category",
+      "pk": 4,
+      "fields": {
+        "name": "Geological oceanography",
+        "tags": [
+          3,
+          4
+        ]
+      }
+    },
+    {
       "model": "core.tags",
       "pk": 1,
       "fields": {
@@ -209,9 +220,60 @@
             "date": "2022-03-01",
             "content_text": "",
             "content": "<p>A healthy diet is crucial for coretaining good health. It can help prevent chronic diseases such as obesity, diabetes, and heart disease. Here are some tips for maintaining a healthy </p><ul><li>Eat plenty of fruits and vegetables</li><li>Limit processed foods</li><li>Drink water instead of sugary drinks</li><li>Get enough sleep</li><li>Exercise regularly</li></ul>",
-            "category": 1,
+            "category": 4,
             "related_articles": [1],
             "tag": 4
         }
+    },
+    {
+      "model": "core.article",
+      "pk": 3,
+      "fields": {
+        "title": "The Effects of Ocean Acidification on Coral Reefs",
+        "description": "Learn about how ocean acidification is affecting coral reefs around the world.",
+        "coverImage": "image/upload/v1667509530/sgcpisbll3zfuqycydzl.jpg",
+        "slug": "ocean-acidification-coral-reefs",
+        "author": 1,
+        "date": "2022-03-01",
+        "content_text": "",
+        "content": "<p>As the ocean absorbs more carbon dioxide, the water becomes more acidic, which can harm marine life. Coral reefs are particularly vulnerable to ocean acidification, as the increased acidity can dissolve the calcium carbonate that makes up the coral's skeleton. This can lead to coral bleaching and the death of entire reef ecosystems. Scientists are studying ways to mitigate the effects of ocean acidification on coral reefs, but the situation is urgent and requires immediate action.</p>",
+        "category": 1,
+        "related_articles": [2, 1],
+        "tag": 2
+      }
+    },
+    {
+      "model": "core.article",
+      "pk": 4,
+      "fields": {
+        "title": "The Gulf Stream and Climate Change",
+        "description": "Learn about how the Gulf Stream affects weather patterns and how climate change is affecting this important ocean current.",
+        "coverImage": "image/upload/v1667509530/sgcpisbll3zfuqycydzl.jpg",
+        "slug": "gulf-stream-climate-change",
+        "author": 1,
+        "date": "2022-03-02",
+        "content_text": "",
+        "content": "<p>The Gulf Stream is a powerful ocean current that brings warm water from the Gulf of Mexico up the eastern coast of the United States and across the Atlantic Ocean. This current affects weather patterns and helps to regulate the climate in North America and Europe. However, climate change is affecting the Gulf Stream, as melting ice in the Arctic Ocean is changing the salinity and temperature of the water. This could have far-reaching effects on the climate and ecosystems in the regions affected by the Gulf Stream.</p>",
+        "category": 1,
+        "related_articles": [1, 3],
+        "tag": 1
+      }
+    },
+    {
+      "model": "core.article",
+      "pk": 5,
+      "fields": {
+        "title": "The Great Pacific Garbage Patch",
+        "description": "Learn about the largest concentration of ocean plastic in the world and its effects on marine life.",
+        "coverImage": "image/upload/v1667509530/sgcpisbll3zfuqycydzl.jpg",
+        "slug": "pacific-garbage-patch",
+        "author": 2,
+        "date": "2022-03-03",
+        "content_text": "",
+        "content": "<p>The Great Pacific Garbage Patch is a huge area in the Pacific Ocean where plastic waste accumulates due to ocean currents. The patch is estimated to be twice the size of Texas and is growing every year. The plastic in the patch can harm marine life, as animals can become entangled in the waste or ingest it, leading to injury or death. Scientists are studying ways to remove the plastic from the ocean and prevent it from entering the ocean in the first place.</p>",
+        "category": 2,
+        "related_articles": [1, 2],
+        "tag": 3
+      }
     }
     ]

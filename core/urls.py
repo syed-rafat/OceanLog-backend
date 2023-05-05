@@ -21,7 +21,6 @@ urlpatterns = [
 
 
 
-
 """
 
 TODO: Api Endpoints are not complited yet.
