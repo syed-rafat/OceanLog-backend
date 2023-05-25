@@ -6,8 +6,28 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
+# serializer for registration view
+class RegisterSerializer(serializers.ModelSerializer):
+    profile = serializers.PrimaryKeyRelatedField(read_only=True)  #queryset=Author.objects.all()
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'password', 'profile', 'email')
+        #read_only_fields = ('is_active', 'is_staff')
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
+    def create(self, validated_data):
+        # password = validated_data.pop('password')
+        user = User.objects.create(**validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
+
 class AuthorSerializer(serializers.ModelSerializer):
-    articles = serializers.StringRelatedField(many=True)
+    # articles = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Author
@@ -57,25 +77,6 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tags
         fields = '__all__'
-
-
-class RegisterSerializer(serializers.ModelSerializer):
-    profile = serializers.PrimaryKeyRelatedField(read_only=True)  #queryset=Author.objects.all()
-
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'password', 'profile', 'email')
-        #read_only_fields = ('is_active', 'is_staff')
-        extra_kwargs = {
-            'password': {'write_only': True}
-        }
-
-    def create(self, validated_data):
-        user = User.objects.create(username=validated_data['username'],
-                                   password=validated_data['password'])
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
 
 
 class ImageSerializer(serializers.ModelSerializer):

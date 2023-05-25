@@ -6,10 +6,15 @@ from django.contrib.auth import authenticate
 from django.conf import settings
 from rest_framework import status
 from django.http import HttpResponse
+from rest_framework.decorators import api_view
+from rest_framework import serializers
+from django.contrib.auth.models import User
+
+
+
+
 
 # This view file is needed for Http only cookie
-
-
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
     return {

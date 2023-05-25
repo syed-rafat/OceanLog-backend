@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 from rest_framework import viewsets, generics
 from .models import Author, Article, Category, Tags, Images
@@ -10,6 +11,16 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.decorators import api_view
+from rest_framework import status
+
+
+class RegisterViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
+    pagination_class = None
+    # permission_classes = [IsAuthenticated]
+
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
@@ -33,12 +44,10 @@ class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     pagination_class = None
-    lookup_field = 'slug'
+    # lookup_field = 'slug'
     # permission_classes = [IsAuthenticated,]
 
     def perform_create(self, serializer):
-        print(self.request.user)
-        print(self)
         serializer.save(account=self.request.user)
 
 
@@ -57,42 +66,6 @@ class TagViewSet(viewsets.ModelViewSet):
     queryset = Tags.objects.all()
     serializer_class = TagSerializer
     pagination_class = None
-
-
-class RegisterViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = RegisterSerializer
-    pagination_class = None
-    permission_classes = [IsAuthenticated]
-
-
-# This Apiview for image upload is not working so i implemented a a generic view down below  which is now working 
-
-# class ImageUrlview(APIView):
-#     # renderer_classes = [JSONRenderer]
-#     parser_classes = (FileUploadParser,)
-
-#     # def get(self, request, *args, **kwargs):
-#     #     pk = self.kwargs['pk']
-#     #     img = Images.objects.get(pk=pk)
-#     #     image_link = "https://res.cloudinary.com/dylqfbsq2/" + str(img.url)
-#     #     link = {'url': image_link}
-#     #     return Response(link)
-
-#     def post(self, request, filename, format=None):
-#         print('self')
-#         repr(self)
-#         print('request')
-#         print(request.data)
-#         file = request.data['file']
-#         serializer = ImageSerializer(data=request.data)
-#         img_obj = Images.objects.create(url=file)
-        
-#         if serializer.is_valid():
-#             serializer.save()
-#             print(serializer.data)
-#         link = {'url': str(img_obj.url)}
-#         return Response(link)
 
 
 class ImageUrlview(generics.CreateAPIView):

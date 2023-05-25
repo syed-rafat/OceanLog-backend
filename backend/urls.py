@@ -20,13 +20,12 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
-from .views import LoginView, default_view
+from .views import default_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('content/', include('core.urls')),
-    # path('login/', LoginView.as_view(), name="login"),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('', default_view),

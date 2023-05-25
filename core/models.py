@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from django.template.defaultfilters import slugify
 from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 # TODO: add description field to article model
@@ -38,23 +40,20 @@ class Author(models.Model):
     def __str__(self):
         return self.name
 
-    # need to apply this perform_create method on serializer instead of model in drf
-    # def perform_create(self, request):
-    #     self.account = request.auth.user
-    #     self.save()
-    #     print(request)
-    #     print('auth object')
-    #     print(request.auth.user)
+
+@receiver(post_save, sender=User)
+def create_author_profile(sender, instance, created, **kwargs):
+    if created:
+        Author.objects.create(account=instance)
 
 
+# tags or sub categories, multiple category can be under 1 tags and multiple tags can be under 1 category
 class Category(models.Model):
     name = models.CharField(max_length=50)
     tags = models.ManyToManyField("Tags", related_name="categories")
 
     def __str__(self):
         return self.name
-
-    # tags or sub categories, multiple category can be under 1 tags and multiple tags can be under 1 category
 
 
 class Tags(models.Model):
@@ -105,6 +104,3 @@ class Article(models.Model):
 
     def __str__(self):
         return str(self.title)
-    
-    
- 
