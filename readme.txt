@@ -13,3 +13,6 @@ $ python3 /var/app/current/manage.py <command name>
 uername: rafat
 password: ******
 
+
+> To populate database with intial data
+$ python3 manage.py delete_and_loaddata dummy_data.json

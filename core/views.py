@@ -27,7 +27,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     lookup_field = 'slug'
     pagination_class = None
-    permission_classes=[IsAuthenticatedOrReadOnly,]
+    permission_classes = [IsAuthenticatedOrReadOnly,]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -74,7 +74,6 @@ class ImageUrlview(generics.CreateAPIView):
     # permission_classes = [AllowAny]
     pagination_class = None
 
-    
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         print(dir(request))
@@ -83,7 +82,8 @@ class ImageUrlview(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        link = {"url": "https://res.cloudinary.com/dylqfbsq2/" + serializer.data['url']}
+        link = {"url": "https://res.cloudinary.com/dylqfbsq2/" +
+                serializer.data['url']}
         print(serializer.data)
         print(link)
         return Response(link, status=200)
@@ -96,12 +96,12 @@ class UserInfoView(APIView):
         user = request.user
         user_obj = User.objects.get(username=user)
         profile = {"id": user_obj.id,
-        "username": user_obj.username}
+                   "username": user_obj.username}
 
         return Response(profile, status=200)
 
 
-# To get all articles related to author, Use the UserArticleView by sending access token to get list 
+# To get all articles related to author, Use the UserArticleView by sending access token to get list
 
 class UserArticles(APIView):
 
@@ -126,3 +126,14 @@ class ArticleListByCategory(ListAPIView):
     def get_queryset(self):
         category = self.kwargs['category']
         return Article.objects.filter(category__id=category)
+
+
+class ArticleSearchAPIView(generics.ListAPIView):
+    serializer_class = ArticleSerializer
+    pagination_class = None
+
+    def get_queryset(self):
+        query = self.request.query_params.get('search')
+        if query:
+            return Article.objects.filter(title__icontains=query)
+        return Article.objects.all()
