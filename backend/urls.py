@@ -21,6 +21,9 @@ from rest_framework_simplejwt.views import (
 )
 from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
 from .views import default_view
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 
 urlpatterns = [
@@ -35,7 +38,8 @@ urlpatterns = [
     # path('reset-password/confirm/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 ]
 
-
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+urlpatterns += stati
 
 from django.dispatch import receiver
 from django.urls import reverse

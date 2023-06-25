@@ -14,6 +14,9 @@ from datetime import timedelta
 from pathlib import Path
 import cloudinary
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 local = True
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -109,11 +112,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 if local==False:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': postgres,
-            'HOST': hostname + ".postgres.database.azure.com",
-            'USER': os.environ['DBUSER'],
-            'PASSWORD': os.environ['DBPASS'] 
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ.get("DB_NAME"),
+            'HOST': os.environ.get("DB_HOST"),
+            'USER': os.environ.get("DB_USER"),
+            'PASSWORD': os.environ.get("DB_PASSWORD"),
+            'PORT': os.environ.get("DB_PORT"),
         }
     }
 else:
@@ -162,8 +166,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = 'static'
+# STATIC_URL = '/static/'
+# STATIC_ROOT = 'static'
+
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
@@ -216,6 +224,8 @@ CORS_ALLOWED_ORIGIN = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+ALLOWED_HOSTS = ['.vercel.app',]
 
 # print(os.environ.get('CLOUDINARY_CLOUD_NAME'))
 
