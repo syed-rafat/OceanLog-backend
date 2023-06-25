@@ -15,7 +15,6 @@ from pathlib import Path
 import cloudinary
 import os
 from dotenv import load_dotenv
-import dj_database_url
 
 load_dotenv()
 
@@ -33,12 +32,12 @@ SECRET_KEY = 'django-insecure-+d!k-*79!f_(a#w(7!u(z-%8d48p&#b48f5r+rv^d6c1p^o_#8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['oclogbackend.azurewebsites.net', '127.0.0.1', 'localhost', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost', '127.0.0.1:8000']
 
 # if 'CODESPACE_NAME' in os.environ:
 #     CSRF_TRUSTED_ORIGINS = [f'https://{os.getenv("CODESPACE_NAME")}-8000.{os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")}']
 
-CSRF_TRUSTED_ORIGINS=['https://oclogbackend.azurewebsites.net']
+CSRF_TRUSTED_ORIGINS=['.vercel.app']
 
 # for printing in backend console. restpassword reset
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -225,8 +224,6 @@ CORS_ALLOWED_ORIGIN = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-
-ALLOWED_HOSTS = ['.vercel.app',]
 
 # print(os.environ.get('CLOUDINARY_CLOUD_NAME'))
 
