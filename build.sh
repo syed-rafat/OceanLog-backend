@@ -2,6 +2,7 @@
 
 # Build the backend
 echo "Building backend..."
+sudo apt-get install libpq-dev
 python3 -m pip install -r requirements.txt
 
 # Make migrations
