@@ -37,7 +37,7 @@ ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost', '127.0.0.1:8000']
 # if 'CODESPACE_NAME' in os.environ:
 #     CSRF_TRUSTED_ORIGINS = [f'https://{os.getenv("CODESPACE_NAME")}-8000.{os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")}']
 
-CSRF_TRUSTED_ORIGINS=['.vercel.app']
+CSRF_TRUSTED_ORIGINS=['https://*.vercel.app']
 
 # for printing in backend console. restpassword reset
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

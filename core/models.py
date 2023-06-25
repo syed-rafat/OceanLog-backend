@@ -50,7 +50,7 @@ def create_author_profile(sender, instance, created, **kwargs):
 # tags or sub categories, multiple category can be under 1 tags and multiple tags can be under 1 category
 class Category(models.Model):
     name = models.CharField(max_length=50)
-    tags = models.ManyToManyField("Tags", related_name="categories")
+    tags = models.ManyToManyField("Tags", related_name="categories", blank=True, null=True)
 
     def __str__(self):
         return self.name

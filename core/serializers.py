@@ -71,8 +71,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class TagSerializer(serializers.ModelSerializer):
-    articles = serializers.StringRelatedField(many=True)
-    categories = CategorySerializer(many=True)
+    articles = serializers.StringRelatedField(many=True, required=False)
+    categories = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(),many=True)
 
     class Meta:
         model = Tags

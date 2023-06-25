@@ -16,3 +16,9 @@ password: ******
 
 > To populate database with intial data
 $ python3 manage.py delete_and_loaddata dummy_data.json
+
+You can also initialize database using the script in /script/ folder
+
+
+> Note
+psycopg-binary~=2.** should be edited in requirements.txt. "~" is very important here, otherwise it will not be built.
