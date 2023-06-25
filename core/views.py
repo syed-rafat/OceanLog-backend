@@ -13,7 +13,7 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.decorators import api_view
 from rest_framework import status
-
+from django.db.models import Q
 
 class RegisterViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -135,5 +135,5 @@ class ArticleSearchAPIView(generics.ListAPIView):
     def get_queryset(self):
         query = self.request.query_params.get('search')
         if query:
-            return Article.objects.filter(title__icontains=query)
+            return Article.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
         return Article.objects.all()
