@@ -38,8 +38,8 @@ urlpatterns = [
     # path('reset-password/confirm/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
-urlpatterns += stati
+# urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+# urlpatterns += stati
 
 from django.dispatch import receiver
 from django.urls import reverse
